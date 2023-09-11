@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 import { Link } from "react-router-dom";
 
 const Navbar = () => {
-	const [isLogin, setIsLogin] = useState(false);
+	const isLogin = false;
 
 	return (
 		<header id="all-header" style={{ width: "100%" }}>

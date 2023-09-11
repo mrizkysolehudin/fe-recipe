@@ -16,7 +16,7 @@ const RegisterPage = () => {
 					<img
 						src="../assets/images/bg-image-content-left.png"
 						className="bg-image-content-left"
-						alt="bg-image-content-left"
+						alt="bg-content-left"
 					/>
 					<div className="bg-left" />
 					<img src="../assets/images/logo.png" className="img-logo" alt="logo" />
