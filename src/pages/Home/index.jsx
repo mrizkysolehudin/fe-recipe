@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./home.css";
 import DiscoverSection from "../../components/Home/DiscoverSection";
 import PopularForYouSection from "../../components/Home/PopularForYouSection";
@@ -6,8 +6,22 @@ import NewRecipeSection from "../../components/Home/NewRecipeSection";
 import PopularRecipeSection from "../../components/Home/PopularRecipeSection";
 import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
+import http from "../../helpers/http";
+import { baseUrl } from "../../helpers/baseUrl";
 
 const HomePage = () => {
+	const [dataRecipe, setDataRecipe] = useState([]);
+
+	useEffect(() => {
+		getDataRecipe();
+	}, []);
+
+	const getDataRecipe = async () => {
+		const result = await http().get(`${baseUrl}/recipe`);
+
+		setDataRecipe(result.data.data);
+	};
+
 	return (
 		<div id="page-home" style={{ position: "relative", width: "100dvw" }}>
 			<Navbar />
@@ -40,9 +54,9 @@ const HomePage = () => {
 				/>
 
 				<DiscoverSection />
-				<PopularForYouSection />
-				<NewRecipeSection />
-				<PopularRecipeSection />
+				<PopularForYouSection dataRecipe={dataRecipe} />
+				<NewRecipeSection dataRecipe={dataRecipe} />
+				<PopularRecipeSection dataRecipe={dataRecipe} />
 			</main>
 
 			<Footer />

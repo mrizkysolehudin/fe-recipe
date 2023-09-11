@@ -1,6 +1,7 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
-const PopularForYouSection = () => {
+const PopularForYouSection = ({ dataRecipe }) => {
 	return (
 		<section className="pt-5 pt-md-0" style={{ marginTop: "10dvw" }}>
 			<h3
@@ -18,8 +19,8 @@ const PopularForYouSection = () => {
 					className="col-12 col-md-6 mt-5 mt-md-0 ms-5 ms-md-0 ps-5 ps-md-0 position-relative">
 					<img
 						className=""
-						style={{ width: "41.5dvw" }}
-						src="./assets/images/home/img-popular-for-you.png"
+						style={{ width: "41.5dvw", height: "41.5dvw", objectFit: "contain" }}
+						src={dataRecipe[5]?.image}
 						alt="img-popular-for-you"
 					/>
 					<div
@@ -39,17 +40,16 @@ const PopularForYouSection = () => {
 					className="col-12 col-md-6"
 					style={{ marginTop: "11dvw", paddingLeft: "10dvw" }}>
 					<h2 className="fw-semibold col-10 position-relative">
-						Healthy Bone Broth Ramen (Quick &amp; Easy)
+						{dataRecipe[5]?.title} (Quick &amp; Easy)
 					</h2>
 					<p className="col-10 col-md-8">
-						Quick + Easy Chicken Bone Broth Ramen- Healthy chicken ramen in a hurry?
-						That's right!
+						Quick + Easy {dataRecipe[5]?.title} in a hurry? That's right!
 					</p>
-					<a
-						href="./pages/recipeDetailsPage.html"
+					<Link
+						to={`/recipe/${dataRecipe[5]?.recipe_id}`}
 						className="btn btn-warning text-light btn-learn-more">
 						Learn More
-					</a>
+					</Link>
 				</div>
 			</div>
 		</section>
