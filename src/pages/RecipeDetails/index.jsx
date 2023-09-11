@@ -1,10 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
 import "./recipeDetails.css";
-import { Link } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
+import http from "../../helpers/http";
+import { baseUrl } from "../../helpers/baseUrl";
+import { splitSentencesToPoints } from "../../utils/splitSentencesToPoints";
 
 const RecipeDetailsPage = () => {
+	const [dataRecipeDetails, setDataRecipeDetails] = useState([]);
+	const { id } = useParams();
+
+	useEffect(() => {
+		getDataRecipeDetails(id);
+	}, [id]);
+
+	const getDataRecipeDetails = async (id) => {
+		const result = await http().get(`${baseUrl}/recipe/${id}`);
+
+		setDataRecipeDetails(result.data.data[0]);
+	};
+
+	const ingredients = splitSentencesToPoints(dataRecipeDetails?.ingredients);
+
 	return (
 		<div id="page-recipeDetails" style={{ width: "100dvw" }}>
 			<Navbar />
@@ -13,12 +31,12 @@ const RecipeDetailsPage = () => {
 					<div
 						style={{ marginTop: "3vw" }}
 						className="d-flex flex-column justify-content-center align-items-center">
-						<h1>Loream Sandwich</h1>
+						<h1>{dataRecipeDetails?.title}</h1>
 						<div id="wrapper-image-details" className="position-relative">
 							<img
 								id="img-details"
-								src="../assets/images/loream-sandwich.png"
-								alt="loream-sandwich"
+								src={dataRecipeDetails?.image}
+								alt={dataRecipeDetails?.title}
 							/>
 							<div className="position-absolute" style={{ bottom: "6%", right: "2%" }}>
 								<button className="btn btn-warning">
@@ -35,15 +53,12 @@ const RecipeDetailsPage = () => {
 						className="text-capitalize"
 						style={{ marginTop: "5vw", marginLeft: "10vw" }}>
 						<h3 style={{ marginBottom: "1vw" }}>Ingredients</h3>
-						<p>- 2 eggs</p>
-						<p>- 2 tbsp mayonnaise</p>
-						<p>- 3 slices bread</p>
-						<p>- a little butter</p>
-						<p>- ⅓ carton of cress</p>
-						<p>
-							- 2-3 slices of tomato or a lettuce leaf and a slice of ham or cheese
-						</p>
-						<p>- crisps, to serve</p>
+
+						<div>
+							{ingredients?.map((item, index) => {
+								return <p key={index}>{`- ${item}`}</p>;
+							})}
+						</div>
 					</div>
 					<div
 						id="videoStep"
@@ -52,22 +67,7 @@ const RecipeDetailsPage = () => {
 						<h3 style={{ marginBottom: "2vw" }}>Video Step</h3>
 						<div className="d-grid gap-4">
 							<button className="btn btn-warning position-relative">
-								<Link to="/recipe/video/:id" className="stretched-link">
-									<img src="../assets/icons/icon-play.svg" alt="icon-play" />
-								</Link>
-							</button>
-							<button className="btn btn-warning position-relative">
-								<Link to="/recipe/video/:id" className="stretched-link">
-									<img src="../assets/icons/icon-play.svg" alt="icon-play" />
-								</Link>
-							</button>
-							<button className="btn btn-warning position-relative">
-								<Link to="/recipe/video/:id" className="stretched-link">
-									<img src="../assets/icons/icon-play.svg" alt="icon-play" />
-								</Link>
-							</button>
-							<button className="btn btn-warning position-relative">
-								<Link to="/recipe/video/:id" className="stretched-link">
+								<Link to={`/recipe/video/${id}`} className="stretched-link">
 									<img src="../assets/icons/icon-play.svg" alt="icon-play" />
 								</Link>
 							</button>

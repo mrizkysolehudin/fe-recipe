@@ -6,7 +6,7 @@ const VideoDetailsPage = () => {
 	return (
 		<div
 			id="page-videoDetails"
-			class="position-relative"
+			className="position-relative"
 			style={{ minHeight: "100vh", width: "100dvw" }}>
 			<Navbar />
 
