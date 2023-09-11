@@ -1,8 +1,71 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import "./login.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import http from "../../helpers/http";
+import { baseUrl } from "../../helpers/baseUrl";
 
 const LoginPage = () => {
+	const navigate = useNavigate();
+
+	const [agreeChecked, setAgreeChecked] = useState(false);
+	const [data, setData] = useState({
+		email: "",
+		password: "",
+	});
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+		if (token) {
+			navigate("/");
+		}
+	}, [navigate]);
+
+	const handleChange = (e) => {
+		setData({
+			...data,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			if (data.email === "" || data.password === "") {
+				Swal.fire({
+					title: "Input error",
+					text: "Please, input your email and password!",
+					icon: "error",
+				});
+
+				return;
+			}
+
+			const response = await http().post(`${baseUrl}/users/login`, data);
+
+			localStorage.setItem("token", response.data.data.token);
+			localStorage.setItem("users", response.data.data.users);
+
+			Swal.fire({
+				title: "Login success",
+				text: "Congratulations! You are now logged in.",
+				icon: "success",
+			});
+
+			setTimeout(() => {
+				window.location.reload();
+			}, 1000);
+		} catch (error) {
+			console.log(error);
+			Swal.fire({
+				title: "Login error",
+				text: "Please try again later...",
+				icon: "error",
+			});
+		}
+	};
+
 	return (
 		<div id="page-login" style={{ width: "100dvw", position: "relative" }}>
 			<main className="row" style={{ width: "100%", height: "100%" }}>
@@ -32,10 +95,16 @@ const LoginPage = () => {
 							className="text-center text-gray">
 							Log in into your exiting account
 						</h4>
-						<form className="ms-4 ms-sm-0" style={{ marginTop: 37 }}>
+
+						<form
+							onSubmit={handleSubmit}
+							className="ms-4 ms-sm-0"
+							style={{ marginTop: 37 }}>
 							<div>
 								<label className="form-label">E-mail</label>
 								<input
+									name="email"
+									onChange={handleChange}
 									type="text"
 									className="form-control width-form"
 									placeholder="examplexxx@gmail.com"
@@ -47,7 +116,9 @@ const LoginPage = () => {
 									Password
 								</label>
 								<input
-									type="text"
+									name="password"
+									onChange={handleChange}
+									type="password"
 									className="form-control width-form"
 									placeholder="Password"
 									style={{ marginTop: 14, height: 64, fontSize: 14 }}
@@ -55,6 +126,8 @@ const LoginPage = () => {
 							</div>
 							<div className="form-check" style={{ marginTop: 24 }}>
 								<input
+									checked={agreeChecked}
+									onChange={() => setAgreeChecked(!agreeChecked)}
 									className="form-check-input"
 									type="checkbox"
 									id="gridCheck"
@@ -68,7 +141,8 @@ const LoginPage = () => {
 								</label>
 							</div>
 							<button
-								type="button"
+								disabled={!agreeChecked}
+								type="submit"
 								className="btn btn-warning text-light width-form"
 								style={{ marginTop: 39, height: 64, fontSize: 16 }}>
 								Log in

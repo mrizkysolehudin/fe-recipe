@@ -1,8 +1,31 @@
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
 
 const Navbar = () => {
-	const isLogin = false;
+	const navigate = useNavigate();
+	const [isLogin, setIsLogin] = useState(false);
+
+	useEffect(() => {
+		const token = localStorage.getItem("token");
+
+		if (token) {
+			setIsLogin(true);
+		}
+	}, []);
+
+	const handleLogout = () => {
+		localStorage.removeItem("token");
+		Swal.fire({
+			text: "Logout success",
+			icon: "success",
+		});
+
+		setTimeout(() => {
+			window.location.reload();
+			navigate("/");
+		}, 1000);
+	};
 
 	return (
 		<header id="all-header" style={{ width: "100%" }}>
@@ -35,12 +58,20 @@ const Navbar = () => {
 					</ul>
 				</div>
 
-				{!isLogin && (
+				{!isLogin ? (
 					<div id="btn-login" style={{ marginRight: "8dvw" }}>
 						<Link to="/login" className="d-flex text-light">
 							<img src="../../../assets/icons/icon-person.svg" alt="icon-person" />
 							<p className="mt-3 ms-2">Login</p>
 						</Link>
+					</div>
+				) : (
+					<div id="btn-login" style={{ marginRight: "8dvw" }}>
+						<button
+							onClick={handleLogout}
+							className="btn text-light btn-danger pt-0 pb-1">
+							Logout
+						</button>
 					</div>
 				)}
 			</nav>
