@@ -1,8 +1,86 @@
-import React from "react";
+import React, { useState } from "react";
 import "./register.css";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import Swal from "sweetalert2";
+import http from "../../helpers/http";
+import { baseUrl } from "../../helpers/baseUrl";
 
 const RegisterPage = () => {
+	const navigate = useNavigate();
+
+	const [agreeChecked, setAgreeChecked] = useState(false);
+	const [data, setData] = useState({
+		name: "",
+		email: "",
+		phone: "",
+		password: "",
+		confirmPassword: "",
+	});
+
+	const handleChange = (e) => {
+		setData({
+			...data,
+			[e.target.name]: e.target.value,
+		});
+	};
+
+	const handleSubmit = async (e) => {
+		e.preventDefault();
+
+		try {
+			if (data.password !== data.confirmPassword) {
+				Swal.fire({
+					title: "error",
+					text: "Password and confirm password must be correct. Please try again.",
+					icon: "error",
+				});
+				return;
+			}
+
+			if (
+				data.name === "" ||
+				data.email === "" ||
+				data.phone === "" ||
+				data.password === "" ||
+				data.confirmPassword === ""
+			) {
+				Swal.fire({
+					title: "Input error",
+					text: "Please, input all data",
+					icon: "error",
+				});
+
+				return;
+			}
+
+			http()
+				.post(`${baseUrl}/users/register`, data)
+				.then(() => {
+					Swal.fire({
+						title: "Register success",
+						text: "Congratulations!",
+						icon: "success",
+					});
+
+					setTimeout(() => {
+						navigate("/login");
+						window.location.reload();
+					}, 2000);
+				});
+		} catch (error) {
+			Swal.fire({
+				title: "Login error",
+				text: "Please try again later...",
+				icon: "error",
+			});
+
+			setTimeout(() => {
+				window.location.reload();
+				return;
+			}, 2000);
+		}
+	};
+
 	return (
 		<div
 			id="page-register"
@@ -35,10 +113,14 @@ const RegisterPage = () => {
 							className="text-center text-gray">
 							Create new account to access all features
 						</h4>
-						<form style={{ marginTop: 37 }}>
+
+						<form onSubmit={handleSubmit} style={{ marginTop: 37 }}>
 							<div>
 								<label className="form-label">Name</label>
 								<input
+									name="name"
+									value={data.name}
+									onChange={handleChange}
 									type="text"
 									className="form-control width-form"
 									placeholder="Enter name"
@@ -48,6 +130,9 @@ const RegisterPage = () => {
 							<div style={{ marginTop: 24 }}>
 								<label className="form-label">Email address</label>
 								<input
+									name="email"
+									value={data.email}
+									onChange={handleChange}
 									type="text"
 									className="form-control width-form"
 									placeholder="Enter email address"
@@ -57,6 +142,9 @@ const RegisterPage = () => {
 							<div style={{ marginTop: 24 }}>
 								<label className="form-label">Phone Number</label>
 								<input
+									name="phone"
+									value={data.phone}
+									onChange={handleChange}
 									type="text"
 									className="form-control width-form"
 									placeholder="08xxxxxxxxxx"
@@ -68,7 +156,10 @@ const RegisterPage = () => {
 									Create New Password
 								</label>
 								<input
-									type="text"
+									name="password"
+									value={data.password}
+									onChange={handleChange}
+									type="password"
 									className="form-control width-form"
 									placeholder="Create New Password"
 									style={{ marginTop: 14, height: 64, fontSize: 14 }}
@@ -79,7 +170,10 @@ const RegisterPage = () => {
 									New Password
 								</label>
 								<input
-									type="text"
+									name="confirmPassword"
+									value={data.confirmPassword}
+									onChange={handleChange}
+									type="password"
 									className="form-control width-form"
 									placeholder="New Password"
 									style={{ marginTop: 14, height: 64, fontSize: 14 }}
@@ -87,6 +181,8 @@ const RegisterPage = () => {
 							</div>
 							<div className="form-check" style={{ marginTop: 24 }}>
 								<input
+									checked={agreeChecked}
+									onChange={() => setAgreeChecked(!agreeChecked)}
 									className="form-check-input"
 									type="checkbox"
 									id="gridCheck"
@@ -100,7 +196,8 @@ const RegisterPage = () => {
 								</label>
 							</div>
 							<button
-								type="button"
+								disabled={!agreeChecked}
+								type="submit"
 								className="btn btn-warning text-light width-form"
 								style={{ marginTop: 39, height: 64, fontSize: 16 }}>
 								Register Account

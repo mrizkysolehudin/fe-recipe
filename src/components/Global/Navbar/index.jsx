@@ -30,7 +30,7 @@ const Navbar = () => {
 	return (
 		<header id="all-header" style={{ width: "100%" }}>
 			<nav
-				className="navbar navbar-expand ms-lg-5 justify-content-between"
+				className="navbar navbar-expand-lg  ms-lg-5 justify-content-between"
 				tyle="padding-top: 3dvw">
 				<div className="container-fluid ps-sm-5">
 					<ul className="navbar-nav gap-sm-5 gap-2">
@@ -66,7 +66,7 @@ const Navbar = () => {
 						</Link>
 					</div>
 				) : (
-					<div id="btn-login" style={{ marginRight: "8dvw" }}>
+					<div id="btn-logout" style={{ marginRight: "8dvw" }}>
 						<button
 							onClick={handleLogout}
 							className="btn text-light btn-danger pt-0 pb-1">

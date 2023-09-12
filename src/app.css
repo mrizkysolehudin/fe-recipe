@@ -48,6 +48,10 @@ body {
 	font-family: "Airbnb Cereal App";
 }
 
+#all-header button {
+	font-size: 3dvw;
+	font-weight: 700;
+}
 #all-header a {
 	color: #2e266f;
 	font-size: 3dvw;
@@ -87,7 +91,8 @@ footer a {
 }
 
 @media only screen and (min-width: 768px) {
-	#all-header a {
+	#all-header a,
+	#all-header button {
 		font-size: 2dvw;
 	}
 	#all-header #btn-login img {
@@ -116,7 +121,8 @@ footer a {
 }
 
 @media only screen and (min-width: 1024px) {
-	#all-header a {
+	#all-header a,
+	#all-header button {
 		font-size: 0.9dvw;
 	}
 	#all-header #btn-login img {
