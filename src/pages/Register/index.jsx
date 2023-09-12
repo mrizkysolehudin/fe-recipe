@@ -7,6 +7,7 @@ import { baseUrl } from "../../helpers/baseUrl";
 
 const RegisterPage = () => {
 	const navigate = useNavigate();
+	const [isLoading, setIsLoading] = useState(false);
 
 	const [agreeChecked, setAgreeChecked] = useState(false);
 	const [data, setData] = useState({
@@ -26,6 +27,7 @@ const RegisterPage = () => {
 
 	const handleSubmit = async (e) => {
 		e.preventDefault();
+		setIsLoading(true);
 
 		try {
 			if (data.password !== data.confirmPassword) {
@@ -65,6 +67,7 @@ const RegisterPage = () => {
 					setTimeout(() => {
 						navigate("/login");
 						window.location.reload();
+						setIsLoading(false);
 					}, 2000);
 				});
 		} catch (error) {
@@ -76,6 +79,8 @@ const RegisterPage = () => {
 
 			setTimeout(() => {
 				window.location.reload();
+				setIsLoading(false);
+
 				return;
 			}, 2000);
 		}
@@ -196,7 +201,7 @@ const RegisterPage = () => {
 								</label>
 							</div>
 							<button
-								disabled={!agreeChecked}
+								disabled={!agreeChecked || isLoading}
 								type="submit"
 								className="btn btn-warning text-light width-form"
 								style={{ marginTop: 39, height: 64, fontSize: 16 }}>
