@@ -39,7 +39,9 @@ const RecipeDetailsPage = () => {
 			<Navbar />
 
 			{isLoading ? (
-				<Alert type="loading" />
+				<div style={{ width: 450, margin: "auto", marginTop: "31vh" }}>
+					<Alert type="loading" />
+				</div>
 			) : isError ? (
 				<Alert type="error" />
 			) : (

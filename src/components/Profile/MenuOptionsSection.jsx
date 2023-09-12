@@ -1,6 +1,11 @@
 import React from "react";
+import NoResult from "../Global/NoResult";
+import { getFirstThreeWords } from "../../utils/getThreeWords";
 
-const MenuOptionsSection = ({ openTab, setOpenTab }) => {
+const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
+	const likedRecipe = 0;
+	const savedRecipe = 0;
+
 	return (
 		<section className="d-grid justify-content-start align-items-start">
 			<div className="position-relative">
@@ -52,40 +57,69 @@ const MenuOptionsSection = ({ openTab, setOpenTab }) => {
 			{openTab === "myRecipe" && (
 				<div
 					id="recipe"
-					className="d-flex flex-wrap column-gap-md-2 row-gap-3 row-gap-lg-0"
-					style={{ marginTop: "4vw", paddingLeft: "5vw" }}>
-					<div className="card-recipe" style={{ position: "relative" }}>
-						<img src="../assets/images/profile/bomb-chicken.png" alt="" />
-						<p className="col-2 position-absolute text-light">Bomb Chicken</p>
-					</div>
-					<div className="card-recipe" style={{ position: "relative" }}>
-						<img src="../assets/images/profile/banana-pancake.png" alt="" />
-						<p className="col-2 position-absolute text-light">Bananas Pancake</p>
-					</div>
+					className="d-flex flex-wrap column-gap-md-4 column-gap-lg-4 row-gap-3 row-gap-lg-4"
+					style={{ marginTop: "4vw", paddingLeft: "5vw", paddingRight: "5vw" }}>
+					{dataRecipes.length ? (
+						dataRecipes?.map((item, index) => (
+							<div
+								key={index}
+								className="card-recipe"
+								style={{ position: "relative" }}>
+								<img src={item?.image} alt={item?.title} />
+								<p className="col-2 position-absolute text-light">
+									{getFirstThreeWords(item?.title)}
+								</p>
+							</div>
+						))
+					) : (
+						<NoResult />
+					)}
 				</div>
 			)}
 
 			{openTab === "savedRecipe" && (
 				<div
 					id="recipe"
-					className="d-flex flex-wrap column-gap-md-2 row-gap-3 row-gap-lg-0"
-					style={{ marginTop: "4vw", paddingLeft: "5vw" }}>
-					<div className="card-recipe" style={{ position: "relative" }}>
-						<img src="../assets/images/profile/banana-pancake.png" alt="" />
-						<p className="col-2 position-absolute text-light">Bananas Pancake</p>
-					</div>
+					className="d-flex flex-wrap column-gap-md-4 column-gap-lg-4 row-gap-3 row-gap-lg-4"
+					style={{ marginTop: "4vw", paddingLeft: "5vw", paddingRight: "5vw" }}>
+					{savedRecipe.length ? (
+						savedRecipe?.map((item, index) => (
+							<div
+								key={index}
+								className="card-recipe"
+								style={{ position: "relative" }}>
+								<img src={item?.image} alt={item?.title} />
+								<p className="col-2 position-absolute text-light">
+									{getFirstThreeWords(item?.title)}
+								</p>
+							</div>
+						))
+					) : (
+						<NoResult />
+					)}
 				</div>
 			)}
 
 			{openTab === "likedRecipe" && (
 				<div
 					id="recipe"
-					className="d-flex flex-wrap column-gap-md-2 row-gap-3 row-gap-lg-0"
-					style={{ marginTop: "4vw", paddingLeft: "5vw" }}>
-					<div className="card-recipe" style={{ position: "relative" }}>
-						<img src="../assets/images/profile/bomb-chicken.png" alt="" />
-						<p className="col-2 position-absolute text-light">Bomb Chicken</p>
-					</div>
+					className="d-flex flex-wrap column-gap-md-4 column-gap-lg-4 row-gap-3 row-gap-lg-4"
+					style={{ marginTop: "4vw", paddingLeft: "5vw", paddingRight: "5vw" }}>
+					{likedRecipe.length ? (
+						likedRecipe?.map((item, index) => (
+							<div
+								key={index}
+								className="card-recipe"
+								style={{ position: "relative" }}>
+								<img src={item?.image} alt={item?.title} />
+								<p className="col-2 position-absolute text-light">
+									{getFirstThreeWords(item?.title)}
+								</p>
+							</div>
+						))
+					) : (
+						<NoResult />
+					)}
 				</div>
 			)}
 		</section>

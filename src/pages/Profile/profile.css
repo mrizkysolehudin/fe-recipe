@@ -4,6 +4,7 @@
 
 #page-profile #avatar {
 	width: 20vw;
+	border-radius: 999px;
 }
 
 #page-profile #btn-edit {
@@ -102,6 +103,12 @@
 	}
 	#page-profile #border-menu {
 		top: 9.5vw;
+	}
+	#page-profile #recipe .card-recipe img {
+		/* width: 18.5vw; */
+		/* height: 12.5vw; */
+		width: 20.5vw;
+		height: 14.5vw;
 	}
 	#page-profile #recipe p {
 		font-size: 18px;

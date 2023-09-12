@@ -30,7 +30,7 @@ const Navbar = () => {
 	return (
 		<header id="all-header" style={{ width: "100%" }}>
 			<nav
-				className="navbar navbar-expand-lg  ms-lg-5 justify-content-between"
+				className="navbar navbar-expand  ms-lg-5 justify-content-between"
 				tyle="padding-top: 3dvw">
 				<div className="container-fluid ps-sm-5">
 					<ul className="navbar-nav gap-sm-5 gap-2">
@@ -49,7 +49,7 @@ const Navbar = () => {
 						</li>
 						<li className="nav-item">
 							<Link
-								to="/myprofile"
+								to={`/myprofile`}
 								className="nav-link fw-bold text-secondary"
 								href="./pages/profilePage.html">
 								Profile

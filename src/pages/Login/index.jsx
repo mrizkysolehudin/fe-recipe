@@ -16,6 +16,7 @@ const LoginPage = () => {
 
 	useEffect(() => {
 		const token = localStorage.getItem("token");
+
 		if (token) {
 			navigate("/");
 		}
@@ -45,7 +46,7 @@ const LoginPage = () => {
 			const response = await http().post(`${baseUrl}/users/login`, data);
 
 			localStorage.setItem("token", response.data.data.token);
-			localStorage.setItem("users", response.data.data.users);
+			localStorage.setItem("user_id", response.data.data.user_id);
 
 			Swal.fire({
 				title: "Login success",

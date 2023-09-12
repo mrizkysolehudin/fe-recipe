@@ -1,14 +1,14 @@
 import React from "react";
 
 const Alert = ({ type }) => {
-	if (type == "loading")
+	if (type === "loading")
 		return (
-			<div className="alert alert-secondary w-50" role="alert">
+			<div className="alert alert-primary w-75 fw-bold text-primary" role="alert">
 				Please wait a moment...
 			</div>
 		);
 
-	if (type == "error")
+	if (type === "error")
 		return (
 			<div
 				style={{ width: "fit-content" }}
