@@ -8,18 +8,29 @@ import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
 import http from "../../helpers/http";
 import { baseUrl } from "../../helpers/baseUrl";
+import Alert from "../../components/Global/Alert";
 
 const HomePage = () => {
 	const [dataRecipe, setDataRecipe] = useState([]);
+	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
 
 	useEffect(() => {
 		getDataRecipe();
 	}, []);
 
 	const getDataRecipe = async () => {
-		const result = await http().get(`${baseUrl}/recipe`);
+		setIsLoading(false);
 
-		setDataRecipe(result.data.data);
+		try {
+			const result = await http().get(`${baseUrl}/recipe`);
+
+			setDataRecipe(result.data.data);
+			setIsLoading(false);
+		} catch (error) {
+			setIsError(true);
+			setIsLoading(false);
+		}
 	};
 
 	return (
@@ -54,9 +65,18 @@ const HomePage = () => {
 				/>
 
 				<DiscoverSection />
-				<PopularForYouSection dataRecipe={dataRecipe} />
-				<NewRecipeSection dataRecipe={dataRecipe} />
-				<PopularRecipeSection dataRecipe={dataRecipe} />
+
+				{isLoading ? (
+					<Alert type="loading" />
+				) : isError ? (
+					<Alert type="error" />
+				) : (
+					<>
+						<PopularForYouSection dataRecipe={dataRecipe} />
+						<NewRecipeSection dataRecipe={dataRecipe} />
+						<PopularRecipeSection dataRecipe={dataRecipe} />
+					</>
+				)}
 			</main>
 
 			<Footer />

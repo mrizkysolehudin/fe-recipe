@@ -14,7 +14,8 @@
 }
 
 #page-recipeDetails #wrapper-image-details img#img-details {
-	width: 50vw;
+	/* width: 50vw; */
+	max-height: 35vw;
 	margin-top: 1vw;
 }
 
