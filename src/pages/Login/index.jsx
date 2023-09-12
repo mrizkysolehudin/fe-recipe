@@ -57,10 +57,9 @@ const LoginPage = () => {
 				window.location.reload();
 			}, 1000);
 		} catch (error) {
-			console.log(error);
 			Swal.fire({
 				title: "Login error",
-				text: "Please try again later...",
+				text: "Wrong password or email. Please try again.",
 				icon: "error",
 			});
 		}
