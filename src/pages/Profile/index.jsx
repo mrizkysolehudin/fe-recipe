@@ -7,17 +7,34 @@ import Alert from "../../components/Global/Alert";
 import { baseUrl } from "../../helpers/baseUrl";
 import http from "../../helpers/http";
 
-const ProfilePage = ({ user, token }) => {
+const ProfilePage = () => {
 	const [openTab, setOpenTab] = useState("myRecipe");
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const [dataRecipes, setDataRecipes] = useState([]);
+	const [userId, setUserId] = useState(null);
+	const [user, setUser] = useState([]);
 
 	useEffect(() => {
-		getRecipesUser(user?.user_id);
-	}, [user?.user_id]);
+		const user_id = localStorage.getItem("user_id");
+		if (user_id) {
+			setUserId(user_id);
+		}
+		if (userId !== null) {
+			getUserProfile(userId);
+			getRecipesUser(userId);
+		}
+	}, [userId]);
 
-	console.log(user.user_id);
+	const getUserProfile = async (id) => {
+		try {
+			const response = await http().get(`${baseUrl}/users/${id}`);
+
+			setUser(response.data.data[0]);
+		} catch (error) {
+			console.log(error);
+		}
+	};
 
 	const getRecipesUser = async (id) => {
 		setIsLoading(true);
