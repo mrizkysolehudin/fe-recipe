@@ -6,10 +6,7 @@ const CardRecipe = ({ withActionButton, item }) => {
 	return (
 		<div className="card-recipe" style={{ position: "relative" }}>
 			{withActionButton && (
-				<div
-					id="wrapper-btn-recipe"
-					style={{ right: "1vw", fontSize: 12, top: "1vw" }}
-					className="position-absolute ">
+				<div id="wrapper-btn-recipe" className="position-absolute ">
 					<div className="d-flex gap-1">
 						<Link to={`/recipe/edit/${item?.recipe_id}`}>
 							<button className="border-0 text-light bg-success px-3 py-0 rounded">

@@ -26,6 +26,11 @@
 #page-profile #border-menu {
 	top: 15vw;
 }
+#page-profile #recipe .card-recipe #wrapper-btn-recipe {
+	right: 12vw;
+	font-size: 12px;
+	top: 2vw;
+}
 
 #page-profile #recipe .card-recipe {
 	margin-left: 5vw;
@@ -75,6 +80,11 @@
 		top: 10vw;
 	}
 
+	#page-profile #recipe .card-recipe #wrapper-btn-recipe {
+		right: 1vw;
+		font-size: 8px;
+		top: 1vw;
+	}
 	#page-profile #recipe .card-recipe {
 		margin-left: 0;
 	}
@@ -98,6 +108,11 @@
 		width: 1.2vw;
 	}
 
+	#page-profile #recipe .card-recipe #wrapper-btn-recipe {
+		right: 1vw;
+		font-size: 14px;
+		top: 1vw;
+	}
 	#page-profile #menu-options button {
 		font-size: 16px;
 	}
