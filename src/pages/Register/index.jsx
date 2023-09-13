@@ -72,8 +72,8 @@ const RegisterPage = () => {
 				});
 		} catch (error) {
 			Swal.fire({
-				title: "Login error",
-				text: "Please try again later...",
+				title: "Register error",
+				text: "Please try again...",
 				icon: "error",
 			});
 
