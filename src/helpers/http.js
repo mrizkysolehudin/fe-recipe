@@ -12,4 +12,18 @@ const http = (token = null) => {
 	});
 };
 
+export const httpFormData = (token = null) => {
+	const headers = {
+		"Content-Type": "multipart/form-data",
+	};
+
+	if (token) {
+		headers.Authorization = `Bearer ${token}`;
+	}
+
+	return axios.create({
+		headers,
+	});
+};
+
 export default http;

@@ -7,6 +7,7 @@ import ProfilePage from "../pages/Profile";
 import AddRecipePage from "../pages/AddRecipe";
 import RegisterPage from "../pages/Register";
 import VideoDetailsPage from "../pages/VideoDetails";
+import EditRecipePage from "../pages/EditRecipe";
 
 const Router = () => {
 	const [token, setToken] = useState("");
@@ -34,6 +35,7 @@ const Router = () => {
 					<Route path=":id" element={<RecipeDetailsPage />} />
 
 					<Route path="add" element={<AddRecipePage />} />
+					<Route path="edit/:id" element={<EditRecipePage />} />
 					<Route path="video/:id" element={<VideoDetailsPage />} />
 				</Route>
 			</Routes>
