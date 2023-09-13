@@ -15,7 +15,6 @@ const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
 					style={{
 						fontSize: 24,
 						fontWeight: 500,
-						gap: "5vw",
 						marginTop: "5vw",
 						paddingLeft: "5vw",
 					}}>

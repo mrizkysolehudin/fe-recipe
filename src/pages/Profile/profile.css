@@ -16,6 +16,10 @@
 	width: 4vw;
 }
 
+#page-profile #menu-options {
+	gap: 4vw;
+}
+
 #page-profile #menu-options button {
 	font-size: 11px;
 	color: #666;
@@ -43,6 +47,11 @@
 	left: 1vw;
 	bottom: -1vw;
 	font-weight: 500;
+}
+@media only screen and (min-width: 375px) {
+	#page-profile #menu-options {
+		gap: 5vw;
+	}
 }
 
 @media only screen and (min-width: 425px) {
