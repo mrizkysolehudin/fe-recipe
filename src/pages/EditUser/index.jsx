@@ -1,25 +1,37 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
-import "./addRecipe.css";
-import { useNavigate } from "react-router-dom";
+import "./editUser.css";
+import { useNavigate, useParams } from "react-router-dom";
 import Swal from "sweetalert2";
-import http from "../../helpers/http";
+import { httpFormData } from "../../helpers/http";
 import { baseUrl } from "../../helpers/baseUrl";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchUserDetailsAction } from "../../helpers/store/actions/user";
 
-const AddRecipePage = () => {
+const EditUserPage = () => {
 	const navigate = useNavigate();
-	const user_id = localStorage.getItem("user_id");
+	const { id } = useParams();
+	const dispatch = useDispatch();
+	const currentUser = useSelector((state) => state.userDetails.data);
+
 	const token = localStorage.getItem("token");
 
 	const [isLoading, setIsLoading] = useState(false);
+	const [isError, setIsError] = useState(false);
 	const [image, setImage] = useState("");
 	const [showImage, setShowImage] = useState("");
 
+	useEffect(() => {
+		if (id) {
+			dispatch(fetchUserDetailsAction(id));
+		}
+	}, [id, dispatch]);
+
 	const [data, setData] = useState({
-		title: "",
-		ingredients: "",
-		video: "",
+		name: currentUser?.name ?? "",
+		email: currentUser?.email ?? "",
+		phone: currentUser?.phone ?? "",
 	});
 
 	const handleChange = (e) => {
@@ -33,9 +45,9 @@ const AddRecipePage = () => {
 		const file = e.target.files[0];
 		const reader = new FileReader();
 		reader.onload = () => {
-			setShowImage(reader.result);
+			setShowImage(reader?.result);
 		};
-		reader.readAsDataURL(file);
+		reader?.readAsDataURL(file);
 
 		setImage(e.target.files[0]);
 	};
@@ -46,13 +58,13 @@ const AddRecipePage = () => {
 
 		try {
 			if (
-				data.title === "" ||
-				data.ingredients === "" ||
-				data.video === "" ||
+				data.name === "" ||
+				data.email === "" ||
+				data.phone === "" ||
 				image === ""
 			) {
 				Swal.fire({
-					title: "Input error",
+					name: "Input error",
 					text: "Please, input all data",
 					icon: "error",
 				});
@@ -61,34 +73,37 @@ const AddRecipePage = () => {
 			}
 
 			const formData = new FormData();
-			formData.append("user_id", user_id);
-			formData.append("title", data?.title);
-			formData.append("ingredients", data?.ingredients);
-			formData.append("video", data?.video);
-			formData.append("image", image);
+			formData.append("user_id", id);
+			formData.append("name", data?.name);
+			formData.append("email", data?.email);
+			formData.append("phone", data?.phone);
+			formData.append("photo", image);
 
-			http(token)
-				.post(`${baseUrl}/recipe`, formData)
+			httpFormData(token)
+				.put(`${baseUrl}/users/${id}`, formData)
 				.then(() => {
 					Swal.fire({
-						title: "Add recipe success",
+						name: "Edit user success",
 						text: "Congratulations!",
 						icon: "success",
 					});
 
 					setTimeout(() => {
-						navigate("/");
+						navigate("/myprofile");
 						window.location.reload();
 						setIsLoading(false);
-					}, 1000);
+					}, 2000);
 				});
 		} catch (error) {
 			setIsLoading(false);
+			setIsError(true);
 
 			Swal.fire({
-				title: "Add recipe error",
+				name: "Edit user error",
 				text: "Please try again later...",
 				icon: "error",
+			}).then(() => {
+				setIsError(false);
 			});
 
 			setTimeout(() => {
@@ -101,7 +116,7 @@ const AddRecipePage = () => {
 	};
 
 	return (
-		<div id="page-addRecipe" style={{ width: "100dvw", position: "relative" }}>
+		<div id="page-editUser" style={{ width: "100dvw", position: "relative" }}>
 			<Navbar />
 
 			<main className="mx-auto col-8">
@@ -123,16 +138,23 @@ const AddRecipePage = () => {
 							style={{ zIndex: -2 }}>
 							<img
 								id="icon-gallery"
-								src="../assets/icons/icon-gallery.svg"
+								src="/assets/icons/icon-gallery.svg"
 								alt="icon-gallery"
 								className=""
 							/>
-							<p className="mt-sm-3">Add Photo</p>
+							<p className="mt-sm-3">Edit Photo</p>
 						</div>
 
-						{showImage && (
+						{!!image ? (
 							<img
 								src={showImage ?? ""}
+								alt="show"
+								style={{ zIndex: -1, objectFit: "contain" }}
+								className="position-absolute top-0 w-100 h-100 rounded-3 "
+							/>
+						) : (
+							<img
+								src={currentUser?.image ?? ""}
 								alt="show"
 								style={{ zIndex: -1, objectFit: "contain" }}
 								className="position-absolute top-0 w-100 h-100 rounded-3 "
@@ -140,35 +162,35 @@ const AddRecipePage = () => {
 						)}
 					</div>
 					<input
-						name="title"
-						value={data.title}
+						name="name"
+						value={data.name}
 						onChange={handleChange}
-						id="title"
+						id="name"
 						type="text"
 						className="form-control ps-sm-4 rounded-3"
-						placeholder="Title"
-					/>
-					<textarea
-						name="ingredients"
-						value={data.ingredients}
-						onChange={handleChange}
-						id="ingredients"
-						className="form-control ps-sm-4 pt-sm-3 rounded-3"
-						placeholder="Ingredients"
+						placeholder="Name"
 					/>
 					<input
-						name="video"
-						value={data.video}
+						name="email"
+						value={data.email}
 						onChange={handleChange}
-						id="video"
+						id="email"
+						className="form-control ps-sm-4 rounded-3"
+						placeholder="Email"
+					/>
+					<input
+						name="phone"
+						value={data.phone}
+						onChange={handleChange}
+						id="phone"
 						type="text"
 						className="form-control ps-sm-4 rounded-3"
-						placeholder="Video"
+						placeholder="Phone"
 					/>
 					<button
 						id="btn-post"
 						type="submit"
-						disabled={isLoading}
+						disabled={isLoading || isError}
 						className="btn btn-warning text-light fw-semibold mx-auto"
 						style={{ width: "21dvw", marginTop: "5dvw" }}>
 						Post
@@ -181,4 +203,4 @@ const AddRecipePage = () => {
 	);
 };
 
-export default AddRecipePage;
+export default EditUserPage;

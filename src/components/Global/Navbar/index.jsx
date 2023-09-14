@@ -21,10 +21,7 @@ const Navbar = () => {
 			icon: "success",
 		});
 
-		setTimeout(() => {
-			window.location.reload();
-			navigate("/");
-		}, 1000);
+		navigate("/");
 	};
 
 	return (

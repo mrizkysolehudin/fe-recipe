@@ -6,6 +6,7 @@ import MenuOptionsSection from "../../components/Profile/MenuOptionsSection";
 import Alert from "../../components/Global/Alert";
 import { baseUrl } from "../../helpers/baseUrl";
 import http from "../../helpers/http";
+import { Link } from "react-router-dom";
 
 const ProfilePage = () => {
 	const [openTab, setOpenTab] = useState("myRecipe");
@@ -65,6 +66,8 @@ const ProfilePage = () => {
 						className="d-flex flex-column align-items-center"
 						style={{ marginTop: "7vw" }}>
 						<div className="position-relative">
+							<Link to={`/edit/profile/${userId}`} className="stretched-link"></Link>
+
 							<img id="avatar" src={user?.photo} alt="avatar-garneta-sharina" />
 							<button
 								id="btn-edit"

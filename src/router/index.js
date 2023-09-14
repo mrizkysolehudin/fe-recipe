@@ -9,6 +9,7 @@ import RegisterPage from "../pages/Register";
 import VideoDetailsPage from "../pages/VideoDetails";
 import EditRecipePage from "../pages/EditRecipe";
 import PrivateRoute from "../components/Global/PrivateRoute";
+import EditUserPage from "../pages/EditUser";
 
 const Router = () => {
 	const [token, setToken] = useState("");
@@ -35,6 +36,14 @@ const Router = () => {
 						element={
 							<PrivateRoute>
 								<ProfilePage token={token} />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="edit/profile/:id"
+						element={
+							<PrivateRoute>
+								<EditUserPage />
 							</PrivateRoute>
 						}
 					/>

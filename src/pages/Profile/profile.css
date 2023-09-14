@@ -4,7 +4,8 @@
 
 #page-profile #avatar {
 	width: 20vw;
-	border-radius: 999px;
+	height: 20vw;
+	border-radius: 9999px;
 }
 
 #page-profile #btn-edit {
@@ -74,6 +75,7 @@
 
 	#page-profile #avatar {
 		width: 8.5vw;
+		height: 8.5vw;
 	}
 
 	#page-profile #btn-edit {
