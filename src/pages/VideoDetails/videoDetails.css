@@ -32,6 +32,8 @@
 
 #page-videoDetails #nextStep img {
 	width: 100%;
+	object-fit: cover;
+	height: 22dvw;
 	border-radius: 5px;
 }
 

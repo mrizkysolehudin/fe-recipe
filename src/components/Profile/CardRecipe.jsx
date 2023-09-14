@@ -5,8 +5,13 @@ import { Link } from "react-router-dom";
 const CardRecipe = ({ withActionButton, item, handleDelete }) => {
 	return (
 		<div className="card-recipe" style={{ position: "relative" }}>
+			<Link to={`/recipe/${item?.recipe_id}`} className="stretched-link"></Link>
+
 			{withActionButton && (
-				<div id="wrapper-btn-recipe" className="position-absolute ">
+				<div
+					id="wrapper-btn-recipe"
+					style={{ zIndex: 1 }}
+					className="position-absolute ">
 					<div className="d-flex gap-1">
 						<Link to={`/recipe/edit/${item?.recipe_id}`}>
 							<button className="border-0 text-light bg-success px-3 py-0 rounded">
