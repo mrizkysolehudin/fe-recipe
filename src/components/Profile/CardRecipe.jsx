@@ -2,7 +2,7 @@ import React from "react";
 import { getFirstThreeWords } from "../../utils/getThreeWords";
 import { Link } from "react-router-dom";
 
-const CardRecipe = ({ withActionButton, item }) => {
+const CardRecipe = ({ withActionButton, item, handleDelete }) => {
 	return (
 		<div className="card-recipe" style={{ position: "relative" }}>
 			{withActionButton && (
@@ -13,7 +13,9 @@ const CardRecipe = ({ withActionButton, item }) => {
 								Edit
 							</button>
 						</Link>
-						<button className="border-0 bg-danger text-light px-2 py-0 rounded">
+						<button
+							onClick={() => handleDelete(item?.recipe_id)}
+							className="border-0 bg-danger text-light px-2 py-0 rounded">
 							Delete
 						</button>
 					</div>

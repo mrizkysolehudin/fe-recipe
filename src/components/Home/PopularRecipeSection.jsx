@@ -19,28 +19,25 @@ const PopularRecipeSection = ({ dataRecipe }) => {
 			</h3>
 
 			<div className="row" style={{ rowGap: "3.7dvw", marginTop: "5.6dvw" }}>
-				{dataRecipe
-					?.slice(0, 1)
-					?.concat(dataRecipe?.slice(2, 7))
-					?.map((item, index) => (
-						<Link
-							key={index}
-							to={`/recipe/${item?.recipe_id}`}
-							className="col-xl-4 col-md-6 col-12"
-							style={{ position: "relative" }}>
-							<img
-								src={item?.image}
-								alt={item?.title}
-								style={{
-									objectFit: "contain",
-									height: "100%",
-								}}
-							/>
-							<p className="col-3 position-absolute">
-								{getFirstThreeWords(item?.title)}
-							</p>
-						</Link>
-					))}
+				{dataRecipe?.slice(0, 8)?.map((item, index) => (
+					<Link
+						key={index}
+						to={`/recipe/${item?.recipe_id}`}
+						className="col-xl-4 col-md-6 col-12"
+						style={{ position: "relative" }}>
+						<img
+							src={item?.image}
+							alt={item?.title}
+							style={{
+								objectFit: "contain",
+								height: "100%",
+							}}
+						/>
+						<p className="col-3 position-absolute">
+							{getFirstThreeWords(item?.title)}
+						</p>
+					</Link>
+				))}
 			</div>
 		</section>
 	);

@@ -27,7 +27,7 @@ const EditRecipePage = () => {
 		if (id) {
 			dispatch(fetchRecipeDetailsAction(id));
 		}
-	}, [id]);
+	}, [id, dispatch]);
 
 	const [data, setData] = useState({
 		title: currentRecipe?.title ?? "",
@@ -97,6 +97,7 @@ const EditRecipePage = () => {
 				});
 		} catch (error) {
 			setIsLoading(false);
+			setIsError(true);
 
 			Swal.fire({
 				title: "Edit recipe error",

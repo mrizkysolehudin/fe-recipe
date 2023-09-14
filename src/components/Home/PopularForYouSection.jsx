@@ -2,6 +2,8 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const PopularForYouSection = ({ dataRecipe }) => {
+	const popularItem = Math.floor(Math.random() * dataRecipe?.length) ?? 0;
+
 	return (
 		<section className="pt-5 pt-md-0" style={{ marginTop: "10dvw" }}>
 			<h3
@@ -20,7 +22,7 @@ const PopularForYouSection = ({ dataRecipe }) => {
 					<img
 						className=""
 						style={{ width: "41.5dvw", height: "41.5dvw", objectFit: "contain" }}
-						src={dataRecipe[5]?.image}
+						src={dataRecipe[popularItem]?.image}
 						alt="img-popular-for-you"
 					/>
 					<div
@@ -40,13 +42,13 @@ const PopularForYouSection = ({ dataRecipe }) => {
 					className="col-12 col-md-6"
 					style={{ marginTop: "11dvw", paddingLeft: "10dvw" }}>
 					<h2 className="fw-semibold col-10 position-relative">
-						{dataRecipe[5]?.title} (Quick &amp; Easy)
+						{dataRecipe[popularItem]?.title} (Quick &amp; Easy)
 					</h2>
 					<p className="col-10 col-md-8">
-						Quick + Easy {dataRecipe[5]?.title} in a hurry? That's right!
+						Quick + Easy {dataRecipe[popularItem]?.title} in a hurry? That's right!
 					</p>
 					<Link
-						to={`/recipe/${dataRecipe[5]?.recipe_id}`}
+						to={`/recipe/${dataRecipe[popularItem]?.recipe_id}`}
 						className="btn btn-warning text-light btn-learn-more">
 						Learn More
 					</Link>

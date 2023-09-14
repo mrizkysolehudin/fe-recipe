@@ -1,10 +1,42 @@
 import React from "react";
 import NoResult from "../Global/NoResult";
 import CardRecipe from "./CardRecipe";
+import http from "../../helpers/http";
+import Swal from "sweetalert2";
+import { baseUrl } from "../../helpers/baseUrl";
 
 const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
 	const likedRecipe = 0;
 	const savedRecipe = 0;
+
+	const handleDelete = async (id) => {
+		try {
+			const token = localStorage.getItem("token");
+			http(token)
+				.delete(`${baseUrl}/recipe/${id}`)
+				.then(() => {
+					Swal.fire({
+						title: "Delete recipe success",
+						text: "Congratulations!",
+						icon: "success",
+					});
+
+					setTimeout(() => {
+						window.location.reload();
+					}, 1000);
+				});
+		} catch (error) {
+			Swal.fire({
+				title: "Delete recipe fail",
+				text: "Please try again later...",
+				icon: "error",
+			});
+
+			setTimeout(() => {
+				window.location.reload();
+			}, 1000);
+		}
+	};
 
 	return (
 		<section className="d-grid justify-content-start align-items-start">
@@ -60,7 +92,12 @@ const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
 					style={{ marginTop: "4vw", paddingLeft: "5vw", paddingRight: "5vw" }}>
 					{!!dataRecipes.length ? (
 						dataRecipes?.map((item, index) => (
-							<CardRecipe key={index} item={item} withActionButton />
+							<CardRecipe
+								key={index}
+								item={item}
+								withActionButton
+								handleDelete={handleDelete}
+							/>
 						))
 					) : (
 						<NoResult />
