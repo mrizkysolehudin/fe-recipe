@@ -8,6 +8,7 @@ import AddRecipePage from "../pages/AddRecipe";
 import RegisterPage from "../pages/Register";
 import VideoDetailsPage from "../pages/VideoDetails";
 import EditRecipePage from "../pages/EditRecipe";
+import PrivateRoute from "../components/Global/PrivateRoute";
 
 const Router = () => {
 	const [token, setToken] = useState("");
@@ -28,15 +29,38 @@ const Router = () => {
 					<Route path="login" element={<LoginPage />} />
 					<Route path="register" element={<RegisterPage />} />
 
-					<Route path="myprofile" element={<ProfilePage token={token} />} />
+					{/* private */}
+					<Route
+						path="myprofile"
+						element={
+							<PrivateRoute>
+								<ProfilePage token={token} />
+							</PrivateRoute>
+						}
+					/>
 				</Route>
 
 				<Route path="/recipe">
 					<Route path=":id" element={<RecipeDetailsPage />} />
-
-					<Route path="add" element={<AddRecipePage />} />
-					<Route path="edit/:id" element={<EditRecipePage />} />
 					<Route path="video/:id" element={<VideoDetailsPage />} />
+
+					{/* private */}
+					<Route
+						path="add"
+						element={
+							<PrivateRoute>
+								<AddRecipePage />
+							</PrivateRoute>
+						}
+					/>
+					<Route
+						path="edit/:id"
+						element={
+							<PrivateRoute>
+								<EditRecipePage />
+							</PrivateRoute>
+						}
+					/>
 				</Route>
 			</Routes>
 		</BrowserRouter>

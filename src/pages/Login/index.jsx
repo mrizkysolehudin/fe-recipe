@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import http from "../../helpers/http";
 import { baseUrl } from "../../helpers/baseUrl";
+import BackToHomeButton from "../../components/Global/BackToHomeButton";
 
 const LoginPage = () => {
 	const navigate = useNavigate();
@@ -68,6 +69,31 @@ const LoginPage = () => {
 
 	return (
 		<div id="page-login" style={{ width: "100dvw", position: "relative" }}>
+			{/* <BackToHomeButton
+				top="73vw"
+				left="4vw"
+				fontSize={12}
+				className="d-sm-none d-block"
+			/> */}
+			<BackToHomeButton
+				top="60vw"
+				left="4vw"
+				fontSize={12}
+				className="d-block d-md-none"
+			/>
+			<BackToHomeButton
+				top="31vw"
+				left="4vw"
+				fontSize={12}
+				className="d-block d-lg-none"
+			/>
+			<BackToHomeButton
+				top="20vw"
+				left="3vw"
+				className="d-none d-lg-block d-xl-none"
+			/>
+			<BackToHomeButton top="20vw" right="3vw" className="d-none d-xl-block" />
+
 			<main className="row" style={{ width: "100%", height: "100%" }}>
 				<section
 					id="content-left"
