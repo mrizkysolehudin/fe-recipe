@@ -89,11 +89,12 @@ const EditRecipePage = () => {
 						icon: "success",
 					});
 
+					navigate("/myprofile");
+					setIsLoading(false);
+
 					setTimeout(() => {
-						navigate("/myprofile");
 						window.location.reload();
-						setIsLoading(false);
-					}, 2000);
+					}, 1000);
 				});
 		} catch (error) {
 			setIsLoading(false);

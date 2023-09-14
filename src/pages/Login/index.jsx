@@ -48,8 +48,9 @@ const LoginPage = () => {
 						icon: "success",
 					});
 
+					navigate("/");
+
 					setTimeout(() => {
-						navigate("/");
 						window.location.reload();
 					}, 1000);
 				});

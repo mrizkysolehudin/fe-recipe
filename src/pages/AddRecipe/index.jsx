@@ -76,10 +76,11 @@ const AddRecipePage = () => {
 						icon: "success",
 					});
 
+					navigate("/");
+					setIsLoading(false);
+
 					setTimeout(() => {
-						navigate("/");
 						window.location.reload();
-						setIsLoading(false);
 					}, 1000);
 				});
 		} catch (error) {
