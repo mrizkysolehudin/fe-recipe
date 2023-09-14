@@ -15,12 +15,8 @@ const HomePage = () => {
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
 
-	useEffect(() => {
-		getDataRecipe();
-	}, []);
-
 	const getDataRecipe = async () => {
-		setIsLoading(false);
+		setIsLoading(true);
 
 		try {
 			const result = await http().get(`${baseUrl}/recipe`);
@@ -32,6 +28,10 @@ const HomePage = () => {
 			setIsLoading(false);
 		}
 	};
+
+	useEffect(() => {
+		getDataRecipe();
+	}, []);
 
 	return (
 		<div id="page-home" style={{ position: "relative", width: "100dvw" }}>
@@ -66,17 +66,21 @@ const HomePage = () => {
 
 				<DiscoverSection />
 
-				{isLoading ? (
-					<Alert type="loading" />
-				) : isError ? (
-					<Alert type="error" />
-				) : (
-					<>
-						<PopularForYouSection dataRecipe={dataRecipe} />
-						<NewRecipeSection dataRecipe={dataRecipe} />
-						<PopularRecipeSection dataRecipe={dataRecipe} />
-					</>
-				)}
+				<PopularForYouSection
+					dataRecipe={dataRecipe}
+					isLoading={isLoading}
+					isError={isError}
+				/>
+				<NewRecipeSection
+					dataRecipe={dataRecipe}
+					isLoading={isLoading}
+					isError={isError}
+				/>
+				<PopularRecipeSection
+					dataRecipe={dataRecipe}
+					isLoading={isLoading}
+					isError={isError}
+				/>
 			</main>
 
 			<Footer />
