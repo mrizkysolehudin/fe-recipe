@@ -15,14 +15,6 @@ const LoginPage = () => {
 		password: "",
 	});
 
-	useEffect(() => {
-		const token = localStorage.getItem("token");
-
-		if (token) {
-			navigate("/");
-		}
-	}, [navigate]);
-
 	const handleChange = (e) => {
 		setData({
 			...data,
@@ -44,20 +36,23 @@ const LoginPage = () => {
 				return;
 			}
 
-			const response = await http().post(`${baseUrl}/users/login`, data);
+			http()
+				.post(`${baseUrl}/users/login`, data)
+				.then((response) => {
+					localStorage.setItem("token", response.data.data.token);
+					localStorage.setItem("user_id", response.data.data.user_id);
 
-			localStorage.setItem("token", response.data.data.token);
-			localStorage.setItem("user_id", response.data.data.user_id);
+					Swal.fire({
+						title: "Login success",
+						text: "Congratulations! You are now logged in.",
+						icon: "success",
+					});
 
-			Swal.fire({
-				title: "Login success",
-				text: "Congratulations! You are now logged in.",
-				icon: "success",
-			});
-
-			setTimeout(() => {
-				window.location.reload();
-			}, 1000);
+					setTimeout(() => {
+						navigate("/");
+						window.location.reload();
+					}, 1000);
+				});
 		} catch (error) {
 			Swal.fire({
 				title: "Login error",
