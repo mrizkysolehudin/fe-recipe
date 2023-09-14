@@ -8,7 +8,6 @@ import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
 import http from "../../helpers/http";
 import { baseUrl } from "../../helpers/baseUrl";
-import Alert from "../../components/Global/Alert";
 
 const HomePage = () => {
 	const [dataRecipe, setDataRecipe] = useState([]);
