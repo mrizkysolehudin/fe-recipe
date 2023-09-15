@@ -1,6 +1,6 @@
 import React from "react";
 
-const DiscoverSection = () => {
+const DiscoverSection = ({ searchTerm, handleChangeSearch, handleKeyDown }) => {
 	return (
 		<section id="discover" className="row">
 			<div className="col-12 col-md-6" style={{ marginTop: "16dvw" }}>
@@ -10,6 +10,9 @@ const DiscoverSection = () => {
 				</h1>
 				<div className="position-relative">
 					<input
+						value={searchTerm}
+						onChange={handleChangeSearch}
+						onKeyDown={handleKeyDown}
 						type="text"
 						style={{
 							width: "33.5dvw",

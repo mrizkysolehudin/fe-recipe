@@ -66,15 +66,17 @@ const VideoDetailsPage = () => {
 					</div>
 				) : isErrorRecipeDetails ? (
 					<Alert type="error" />
-				) : (
+				) : dataRecipeDetails?.video &&
+				  dataRecipeDetails.video.startsWith("https://youtube.com/embed/") ? (
 					<section id="currentStep" className="col-12 col-lg-7">
 						<div className="col-12">
 							<iframe
-								title="step 4"
+								title="recipe"
 								src={dataRecipeDetails?.video}
 								frameBorder={0}
 								allowFullScreen=""
 							/>
+
 							<h5 className="mt-3">
 								{dataRecipeDetails?.title}
 								{/* <span className="d-block">Cut the condiment and then mix it </span> */}
@@ -82,6 +84,12 @@ const VideoDetailsPage = () => {
 							<p>{formatDate(dataRecipeDetails?.created_at)}</p>
 						</div>
 					</section>
+				) : (
+					<div
+						id="no-iframe"
+						className="d-flex justify-content-center align-items-center">
+						<NoResult text="No Video" />
+					</div>
 				)}
 
 				<section id="nextStep">

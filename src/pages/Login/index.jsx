@@ -36,24 +36,21 @@ const LoginPage = () => {
 				return;
 			}
 
-			http()
-				.post(`${baseUrl}/users/login`, data)
-				.then((response) => {
-					localStorage.setItem("token", response.data.data.token);
-					localStorage.setItem("user_id", response.data.data.user_id);
+			const response = await http().post(`${baseUrl}/users/login`, data);
+			localStorage.setItem("token", response.data.data.token);
+			localStorage.setItem("user_id", response.data.data.user_id);
 
-					Swal.fire({
-						title: "Login success",
-						text: "Congratulations! You are now logged in.",
-						icon: "success",
-					});
+			Swal.fire({
+				title: "Login success",
+				text: "Congratulations! You are now logged in.",
+				icon: "success",
+			});
 
-					navigate("/");
+			navigate("/");
 
-					setTimeout(() => {
-						window.location.reload();
-					}, 1000);
-				});
+			setTimeout(() => {
+				window.location.reload();
+			}, 1000);
 		} catch (error) {
 			Swal.fire({
 				title: "Login error",

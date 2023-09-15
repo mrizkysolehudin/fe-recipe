@@ -4,10 +4,12 @@ import CardRecipe from "./CardRecipe";
 import http from "../../helpers/http";
 import Swal from "sweetalert2";
 import { baseUrl } from "../../helpers/baseUrl";
+import { useNavigate } from "react-router-dom";
 
 const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
 	const likedRecipe = 0;
 	const savedRecipe = 0;
+	const navigate = useNavigate();
 
 	const handleDelete = async (id) => {
 		try {
@@ -20,6 +22,8 @@ const MenuOptionsSection = ({ openTab, setOpenTab, dataRecipes }) => {
 						text: "Congratulations!",
 						icon: "success",
 					});
+
+					navigate("/myprofile");
 
 					setTimeout(() => {
 						window.location.reload();

@@ -9,35 +9,36 @@ const NewRecipeSection = ({ dataRecipe, isLoading, isError }) => {
 		<section
 			className="position-relative pt-5 pt-md-0"
 			style={{ marginTop: "10dvw" }}>
+			<div
+				className="d-none d-md-block"
+				style={{
+					backgroundColor: "#efc81a",
+					width: "24vw",
+					height: "40vw",
+					position: "absolute",
+					top: 0,
+					left: 0,
+					zIndex: -1,
+					marginLeft: "-118px",
+					marginTop: "12dvw",
+				}}
+			/>
+			<h3
+				style={{
+					borderLeft: "1.2dvw solid",
+					height: "7dvw",
+					paddingLeft: "1.5dvw",
+				}}
+				className="fw-bold border-warning align-items-center d-flex">
+				New Recipe
+			</h3>
+
 			{isLoading ? (
 				<Alert type="loading" />
 			) : isError ? (
 				<Alert type="error" />
 			) : (
 				<>
-					<div
-						className="d-none d-md-block"
-						style={{
-							backgroundColor: "#efc81a",
-							width: "24vw",
-							height: "40vw",
-							position: "absolute",
-							top: 0,
-							left: 0,
-							zIndex: -1,
-							marginLeft: "-118px",
-							marginTop: "12dvw",
-						}}
-					/>
-					<h3
-						style={{
-							borderLeft: "1.2dvw solid",
-							height: "7dvw",
-							paddingLeft: "1.5dvw",
-						}}
-						className="fw-bold border-warning align-items-center d-flex">
-						New Recipe
-					</h3>
 					<div className="d-md-flex" style={{ marginTop: "9dvw" }}>
 						<div
 							id="wrapper-img-new-recipe"

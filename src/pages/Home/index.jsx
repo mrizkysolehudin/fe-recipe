@@ -8,17 +8,21 @@ import Navbar from "../../components/Global/Navbar";
 import Footer from "../../components/Global/Footer";
 import http from "../../helpers/http";
 import { baseUrl } from "../../helpers/baseUrl";
+import { useNavigate } from "react-router-dom";
 
 const HomePage = () => {
+	const navigate = useNavigate();
+
 	const [dataRecipe, setDataRecipe] = useState([]);
 	const [isLoading, setIsLoading] = useState(false);
 	const [isError, setIsError] = useState(false);
+	const [searchTerm, setSearchTerm] = useState([]);
 
-	const getDataRecipe = async () => {
+	const getDataRecipe = async (search) => {
 		setIsLoading(true);
 
 		try {
-			const result = await http().get(`${baseUrl}/recipe`);
+			const result = await http().get(`${baseUrl}/recipe?${search}`);
 
 			setDataRecipe(result.data.data);
 			setIsLoading(false);
@@ -29,8 +33,29 @@ const HomePage = () => {
 	};
 
 	useEffect(() => {
-		getDataRecipe();
-	}, []);
+		getDataRecipe(searchTerm);
+	}, [searchTerm]);
+
+	const handleSearch = (e) => {
+		e.preventDefault();
+
+		const searchData = dataRecipe?.filter((item) => {
+			return item?.title?.toLowerCase().includes(searchTerm?.toLowerCase());
+		});
+
+		setSearchTerm(e.target.value);
+		localStorage.setItem("searchData", JSON.stringify(searchData));
+
+		setTimeout(() => {
+			navigate(`/search-page?search=${searchTerm}`);
+		}, 1000);
+	};
+
+	const handleKeyDown = (e) => {
+		if (e.key === "Enter") {
+			handleSearch(e);
+		}
+	};
 
 	return (
 		<div id="page-home" style={{ position: "relative", width: "100dvw" }}>
@@ -63,7 +88,11 @@ const HomePage = () => {
 					}}
 				/>
 
-				<DiscoverSection />
+				<DiscoverSection
+					searchTerm={searchTerm}
+					handleChangeSearch={(e) => setSearchTerm(e.target.value)}
+					handleKeyDown={handleKeyDown}
+				/>
 
 				<PopularForYouSection
 					dataRecipe={dataRecipe}

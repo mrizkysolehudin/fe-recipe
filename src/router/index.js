@@ -10,6 +10,7 @@ import VideoDetailsPage from "../pages/VideoDetails";
 import EditRecipePage from "../pages/EditRecipe";
 import PrivateRoute from "../components/Global/PrivateRoute";
 import EditUserPage from "../pages/EditUser";
+import SearchPage from "../pages/SearchPage";
 
 const Router = () => {
 	const [token, setToken] = useState("");
@@ -29,6 +30,7 @@ const Router = () => {
 					<Route index element={<HomePage />} />
 					<Route path="login" element={<LoginPage />} />
 					<Route path="register" element={<RegisterPage />} />
+					<Route path="search-page" element={<SearchPage />} />
 
 					{/* private */}
 					<Route

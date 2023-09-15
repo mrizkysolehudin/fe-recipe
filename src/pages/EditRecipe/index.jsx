@@ -19,7 +19,6 @@ const EditRecipePage = () => {
 	const token = localStorage.getItem("token");
 
 	const [isLoading, setIsLoading] = useState(false);
-	const [isError, setIsError] = useState(false);
 	const [image, setImage] = useState("");
 	const [showImage, setShowImage] = useState("");
 
@@ -70,7 +69,7 @@ const EditRecipePage = () => {
 					icon: "error",
 				});
 
-				return;
+				setIsLoading(false);
 			}
 
 			const formData = new FormData();
@@ -92,13 +91,23 @@ const EditRecipePage = () => {
 					navigate("/myprofile");
 					setIsLoading(false);
 
-					setTimeout(() => {
-						window.location.reload();
-					}, 1000);
+					// setTimeout(() => {
+					// 	window.location.reload();
+					// }, 1000);
+				})
+				.catch((error) => {
+					if (error.response && error.response.status === 413) {
+						Swal.fire({
+							title: "Input image error",
+							text: "File size should be less than 2MB",
+							icon: "error",
+						});
+
+						setIsLoading(false);
+					}
 				});
 		} catch (error) {
 			setIsLoading(false);
-			setIsError(true);
 
 			Swal.fire({
 				title: "Edit recipe error",
@@ -106,9 +115,10 @@ const EditRecipePage = () => {
 				icon: "error",
 			});
 
+			setIsLoading(false);
+
 			setTimeout(() => {
 				window.location.reload();
-				setIsLoading(false);
 
 				return;
 			}, 2000);
@@ -190,7 +200,7 @@ const EditRecipePage = () => {
 					<button
 						id="btn-post"
 						type="submit"
-						disabled={isLoading || isError}
+						disabled={isLoading}
 						className="btn btn-warning text-light fw-semibold mx-auto"
 						style={{ width: "21dvw", marginTop: "5dvw" }}>
 						Post
